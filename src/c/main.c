@@ -132,6 +132,16 @@ static void update_time() {
 
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
+  if(tick_time->tm_min % 30 == 0) {
+    
+  DictionaryIterator *iter;
+  app_message_outbox_begin(&iter);
+
+  dict_write_uint8(iter, 0, 0);
+
+  // Send the message to update 
+  app_message_outbox_send();
+}
   update_time();
 }
 

@@ -9,7 +9,7 @@ var xhrRequest = function (url, type, callback) {
 
 function locationSuccess(pos) {
   // Construct URL
-  var myAPIKey= '0af7a04dd834108bc2145332b2249ac6';
+  var myAPIKey= '***********';// key made private
   var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' +
       pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + myAPIKey;
 

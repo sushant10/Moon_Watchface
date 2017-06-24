@@ -1,7 +1,9 @@
+![Banner](Banner.png)
+
 # Moon Watchface
 Currently available on the pebble store
-
-Pebble watchface built with C
+Pebble watchface built with C with custom fonts.
+Grabs weather from openWeather.com.
 
 **Screenshot**:
 

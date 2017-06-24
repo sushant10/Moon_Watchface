@@ -1,0 +1,66 @@
+{
+    "author": "Sushi Dev",
+    "dependencies": {},
+    "keywords": [],
+    "name": "moon",
+    "pebble": {
+        "displayName": "MOON",
+        "enableMultiJS": true,
+        "messageKeys": {
+            "CONDITIONS": 1,
+            "TEMPERATURE": 0
+        },
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "fonts/Loew Small.ttf",
+                    "name": "FONT_LOEW_13",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Blog Bold.ttf",
+                    "name": "FONT_BLOG_38",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "images/Moon.png",
+                    "name": "SPACE",
+                    "targetPlatforms": null,
+                    "type": "png"
+                },
+                {
+                    "file": "fonts/Loew.ttf",
+                    "name": "FONT_LOEW_15",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Blogger Sans-Medium Italic.ttf",
+                    "name": "FONT_BLOG_18",
+                    "targetPlatforms": null,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Prime Regular.otf",
+                    "name": "FONT_TECH_15",
+                    "targetPlatforms": null,
+                    "type": "font"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "basalt",
+            "emery"
+        ],
+        "uuid": "66ba87e9-b9c9-4400-ab5f-fc029f711fcf",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "1.0.0"
+}

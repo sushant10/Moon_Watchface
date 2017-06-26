@@ -71,7 +71,7 @@ static void main_window_load(Window *window) {
   
   //BATTERY
   s_battery_font= fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_LOEW_13));
-  s_battery_layer = text_layer_create(GRect(0, 21, bounds.size.w, 34));
+  s_battery_layer = text_layer_create(GRect(0, PBL_IF_ROUND_ELSE(25, 21), bounds.size.w, 34));
   text_layer_set_text_color(s_battery_layer, COLOR_FALLBACK(GColorFolly,GColorWhite));
   text_layer_set_background_color(s_battery_layer, GColorClear);
   text_layer_set_font(s_battery_layer, s_battery_font);
@@ -83,7 +83,7 @@ static void main_window_load(Window *window) {
   layer_add_child(window_layer, text_layer_get_layer(s_battery_layer));
   
   s_sushi_font= fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_LOEW_15));
-  s_sushi_layer = text_layer_create(GRect(0, 4, bounds.size.w, 34));
+  s_sushi_layer = text_layer_create(GRect(0, PBL_IF_ROUND_ELSE(9, 4), bounds.size.w, 34));
   text_layer_set_text_color(s_sushi_layer, GColorWhite);
   text_layer_set_background_color(s_sushi_layer, GColorClear);
   text_layer_set_font(s_sushi_layer, s_sushi_font);

@@ -4,6 +4,9 @@
     "keywords": [],
     "name": "moon",
     "pebble": {
+        "capabilities": [
+            "location"
+        ],
         "displayName": "MOON",
         "enableMultiJS": true,
         "messageKeys": {
@@ -55,6 +58,8 @@
         "targetPlatforms": [
             "aplite",
             "basalt",
+            "chalk",
+            "diorite",
             "emery"
         ],
         "uuid": "66ba87e9-b9c9-4400-ab5f-fc029f711fcf",
@@ -62,5 +67,5 @@
             "watchface": true
         }
     },
-    "version": "1.0.0"
+    "version": "1.7.0"
 }

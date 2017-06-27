@@ -9,5 +9,5 @@ Grabs weather from openWeather.com.
 
 **Screenshot**:
 
-![Screenshot](screenshot.png) ![Screenshot1](screenshot1.png) ![Screenshot2](screenshot3.png)
+![Screenshot](screenshot4.png) ![Screenshot1](screenshot1.png) ![Screenshot2](screenshot3.png)
 

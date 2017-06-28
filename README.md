@@ -14,7 +14,7 @@ Metric
 ![Screenshot](screenshot4.png) ![Screenshot1](screenshot1.png) ![Screenshot2](screenshot3.png)
 
 Config
-![Screenshot](Config.png)
+![Screenshot](Config.PNG)
 
 Imperial
 

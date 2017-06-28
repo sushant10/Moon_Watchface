@@ -2,6 +2,7 @@
 
 # Moon Watchface
 Currently available on the pebble store.
+Now with Clay config to toggle units.
 Supports all pebble watches.
 
 Pebble watchface built with C with custom fonts.
@@ -11,6 +12,9 @@ Grabs weather from openWeather.com.
 Metric
 
 ![Screenshot](screenshot4.png) ![Screenshot1](screenshot1.png) ![Screenshot2](screenshot3.png)
+
+Config
+![Screenshot](config.png)
 
 Imperial
 

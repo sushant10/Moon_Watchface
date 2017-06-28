@@ -14,7 +14,7 @@ Metric
 
 Imperial
 
-![Screenshot](s2.png) ![Screenshot1](s3.png) ![Screenshot2](s3.png)
+![Screenshot](s2.png) ![Screenshot1](s3.png) ![Screenshot2](s1.png)
 
 
 

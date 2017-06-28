@@ -1,5 +1,5 @@
 #include <pebble.h>
-
+#include "weather.h"
 
 static Window *s_main_window;
 static TextLayer *s_time_layer;
@@ -12,6 +12,43 @@ static TextLayer *s_sushi_layer;
 static GFont s_sushi_font;
 static BitmapLayer *space_image_layer;
 static GBitmap *space_image;
+ClaySettings settings;
+
+// Initialize the default settings
+static void prv_default_settings() {
+  settings.WeatherIsFahrenheit= false;
+}
+
+// Read settings from persistent storage
+static void prv_load_settings() {
+  // Load the default settings
+  prv_default_settings();
+  // Read settings from persistent storage, if they exist
+  persist_read_data(SETTINGS_KEY, &settings, sizeof(settings));
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "load reached");
+}
+
+// Save the settings to persistent storage
+static void prv_save_settings() {
+  persist_write_data(SETTINGS_KEY, &settings, sizeof(settings));
+  // Update the display based on new settings
+  prv_update_display();
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "save reached");
+}
+
+// Update the display elements
+static void prv_update_display(){
+  DictionaryIterator *iter;
+  app_message_outbox_begin(&iter);
+
+  dict_write_uint8(iter, 0, 0);
+
+  // Update weather
+  app_message_outbox_send();
+APP_LOG(APP_LOG_LEVEL_DEBUG, "display reached");
+}
+
+
 
 static void handle_battery(BatteryChargeState charge_state) {
   static char battery_text[] = "100% charge";
@@ -141,23 +178,54 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 
   // Send the message to update 
   app_message_outbox_send();
-}
+  }
+  
   update_time();
 }
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
+  //listen for clay config change
+  Tuple *unit = dict_find(iterator, MESSAGE_KEY_WeatherIsFahrenheit);
+  if (unit) {
+    //update display only on weather change
+    settings.WeatherIsFahrenheit = unit->value->int32 == 1;
+    prv_save_settings();
+  }
+  // Save the new settings to persistent storage
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "inbox reached");
+  
+  
   // Store incoming information
   static char temperature_buffer[8];
   static char conditions_buffer[32];
   static char weather_layer_buffer[32];
+  static char units_buffer[32];
+  
   // Read tuples for data
   Tuple *temp_tuple = dict_find(iterator, MESSAGE_KEY_TEMPERATURE);
   Tuple *conditions_tuple = dict_find(iterator, MESSAGE_KEY_CONDITIONS);
-
+  Tuple *units_tuple = dict_find(iterator, MESSAGE_KEY_WEATHERUNIT);
+  
   // If all data is available, use it
-  if(temp_tuple && conditions_tuple) {
-    snprintf(temperature_buffer, sizeof(temperature_buffer), "%dC", (int)temp_tuple->value->int32);
+  if(temp_tuple && conditions_tuple ) {
+    //Check units of weather
+    char *unit_tpye =  units_tuple->value->cstring;
+    //convert to readable form
+    snprintf(units_buffer, sizeof(units_buffer),"%s",unit_tpye);
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "unit is %s", units_buffer);
+    if(strcmp(units_buffer,"imperial")==0)
+    {
+        snprintf(temperature_buffer, sizeof(temperature_buffer), "%dF", (int)temp_tuple->value->int32); 
+         APP_LOG(APP_LOG_LEVEL_DEBUG, "temp is %s", temperature_buffer);
+    }
+    else
+    {
+      snprintf(temperature_buffer, sizeof(temperature_buffer), "%dC", (int)temp_tuple->value->int32);
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "temp is %s", temperature_buffer);
+      
+    }
     snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", conditions_tuple->value->cstring);
+    
   }
   // Assemble full string and display
   snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s, %s", temperature_buffer, conditions_buffer);
@@ -178,10 +246,9 @@ static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
 }
 
 static void init() {
-  
+  prv_load_settings();
   // Register with TickTimerService
   tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
-
   s_main_window = window_create();
 
   // Set handlers to manage the elements inside the Window
@@ -194,6 +261,7 @@ static void init() {
   window_stack_push(s_main_window, true);
   update_time();
   // Register callbacks
+  
   app_message_register_inbox_received(inbox_received_callback);
   app_message_register_inbox_dropped(inbox_dropped_callback);
   app_message_register_outbox_failed(outbox_failed_callback);

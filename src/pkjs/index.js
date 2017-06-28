@@ -6,12 +6,31 @@ var xhrRequest = function (url, type, callback) {
   xhr.open(type, url);
   xhr.send();
 };
+// Import the Clay package
+var Clay = require('pebble-clay');
+// Load our Clay configuration file
+var clayConfig = require('./config');
+// Initialize Clay
+var clay = new Clay(clayConfig);
+
+function unitsToString(unit) {
+  if (unit) {
+    return "imperial";
+  }
+  return "metric";
+}
 
 function locationSuccess(pos) {
   // Construct URL
-  var myAPIKey= '*************';// key made private
+  var settings = {};
+  var units = "metric";
+  try {
+    settings = JSON.parse(localStorage.getItem('clay-settings')) || {};
+    units = unitsToString(settings.WeatherIsFahrenheit);
+  } catch (e) {}
+  var myAPIKey= '*****************';// key made private
   var url = 'http://api.openweathermap.org/data/2.5/weather?lat=' +
-      pos.coords.latitude + '&lon=' + pos.coords.longitude + '&appid=' + myAPIKey;
+      pos.coords.latitude + '&lon=' + pos.coords.longitude + '&units='+ units +'&appid=' + myAPIKey;
 
   // Send request to OpenWeatherMap
   xhrRequest(url, 'GET', 
@@ -20,16 +39,21 @@ function locationSuccess(pos) {
       var json = JSON.parse(responseText);
 
       // Temperature in Kelvin requires adjustment
-      var temperature = Math.round(json.main.temp - 273.15);
+      //... no longer requires adjustment
+     
+      var temperature = Math.round(json.main.temp);
       console.log('Temperature is ' + temperature);
 
       // Conditions
       var conditions = json.weather[0].main;      
       console.log('Conditions are ' + conditions);
       // Assemble dictionary using our keys
+      console.log('Unit is '+ units);
+      console.log('Temperature is ' + temperature);
     var dictionary = {
       "TEMPERATURE": temperature,
-      "CONDITIONS": conditions
+      "CONDITIONS": conditions,
+      "WEATHERUNIT": units
     };
 
     // Send to Pebble

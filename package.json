@@ -1,6 +1,8 @@
 {
     "author": "Sushi Dev",
-    "dependencies": {},
+    "dependencies": {
+        "pebble-clay": "^1.0.4"
+    },
     "keywords": [],
     "name": "moon",
     "pebble": {
@@ -11,7 +13,9 @@
         "enableMultiJS": true,
         "messageKeys": {
             "CONDITIONS": 1,
-            "TEMPERATURE": 0
+            "TEMPERATURE": 2,
+            "WEATHERUNIT": 4,
+            "WeatherIsFahrenheit": 0
         },
         "projectType": "native",
         "resources": {
@@ -67,5 +71,5 @@
             "watchface": true
         }
     },
-    "version": "1.7.0"
+    "version": "2.0.0"
 }

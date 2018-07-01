@@ -3,7 +3,7 @@
 
 ![Banner](Banner.png)
 
-Currently available on the pebble store with a little under 300 installs!!
+Currently available on the pebble store with a over 300 installs and 31 hearts!!
 Now with Clay config to toggle units.
 Supports all pebble watches.
 
